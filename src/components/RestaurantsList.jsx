@@ -1,20 +1,24 @@
 import React, { useEffect } from 'react';
 import RestaurantFinder from '../api/RestaurantFinder';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadRestaurants } from '../redux/actions/restaurantActions';
 
-const RestaurantsList = () => {
+const RestaurantsList = ({ restaurants, loadRestaurants }) => {
   useEffect(() => {
     // pozovi funkciju gdje cemo pozivati naš api jer useEffect 'ne voli' da mu vracamo promise (a u našem slučaju response vraća promise)
     const fetchData = async () => {
       try {
         const response = await RestaurantFinder.get('/');
-        console.log(response);
+        loadRestaurants(response.data.data.restaurants);
+        // console.log('loadRestaurants', response.data.data.restaurants);
       } catch (err) {
         console.error(err.message);
       }
     };
 
     fetchData();
-  }, []);
+  }, [loadRestaurants]);
 
   return (
     <div className='list-group'>
@@ -30,34 +34,38 @@ const RestaurantsList = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>McDonalds</td>
-            <td>Split</td>
-            <td>$$</td>
-            <td>Rating</td>
-            <td>
-              <button className='btn btn-warning'>Update</button>
-            </td>
-            <td>
-              <button className='btn btn-danger'>Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>McDonalds</td>
-            <td>Split</td>
-            <td>$$</td>
-            <td>Rating</td>
-            <td>
-              <button className='btn btn-warning'>Update</button>
-            </td>
-            <td>
-              <button className='btn btn-danger'>Delete</button>
-            </td>
-          </tr>
+          {restaurants &&
+            restaurants.map((restaurant) => (
+              <tr key={restaurant.id}>
+                <td>{restaurant.name}</td>
+                <td>{restaurant.location}</td>
+                <td>{'$'.repeat(restaurant.price_range)}</td>
+                <td>reviews</td>
+                <td>
+                  <button className='btn btn-warning'>Update</button>
+                </td>
+                <td>
+                  <button className='btn btn-danger'>Delete</button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default RestaurantsList;
+const mapStateToProps = (state, ownProps) => {
+  // console.log('mapStateToProps', state.restaurantReducer.restaurants);
+  return {
+    restaurants: state.restaurantReducer.restaurants,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadRestaurants: bindActionCreators(loadRestaurants, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantsList);

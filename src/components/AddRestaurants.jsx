@@ -1,22 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  handleLocationProps,
+  handleNameProps,
+  handlePriceRangeProps,
+} from '../redux/actions/restaurantActions';
 
-const AddRestaurants = () => {
+const AddRestaurants = ({
+  properties,
+  handleNameProps,
+  handleLocationProps,
+  handlePriceRangeProps,
+}) => {
+  // console.log('object');
   return (
     <div className='mb-4'>
       <form>
         <div className='form-row'>
           <div className='col'>
-            <input type='text' className='form-control' placeholder='Name' />
+            <input
+              value={properties.name}
+              onChange={(e) => handleNameProps(e.target.value)}
+              type='text'
+              className='form-control'
+              placeholder='Name'
+            />
           </div>
           <div className='col'>
             <input
+              onChange={(e) => handleLocationProps(e.target.value)}
+              value={properties.location}
               type='text'
               className='form-control'
               placeholder='Location'
             />
           </div>
           <div className='col'>
-            <select className='custom-select my-1 mr-sm-2'>
+            <select
+              onChange={(e) => handlePriceRangeProps(e.target.value)}
+              value={properties.priceRange}
+              className='custom-select my-1 mr-sm-2'
+            >
               <option disabled>Price Range</option>
               <option value='1'>$</option>
               <option value='2'>$$</option>
@@ -32,4 +57,19 @@ const AddRestaurants = () => {
   );
 };
 
-export default AddRestaurants;
+const mapStateToProps = (state, ownProps) => {
+  console.log('mapStateToProps', state.restaurantReducer.properties);
+  return {
+    properties: state.restaurantReducer.properties,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleNameProps: bindActionCreators(handleNameProps, dispatch),
+    handleLocationProps: bindActionCreators(handleLocationProps, dispatch),
+    handlePriceRangeProps: bindActionCreators(handlePriceRangeProps, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddRestaurants);
