@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const db = require('../server/db');
 
 // this is middleware
+app.use(cors());
 app.use(express.json());
 
 // get all restaurants
