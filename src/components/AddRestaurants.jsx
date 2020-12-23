@@ -2,18 +2,36 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
+  createNewRestaurant,
   handleLocationProps,
   handleNameProps,
   handlePriceRangeProps,
 } from '../redux/actions/restaurantActions';
+import RestaurantFinder from '../api/RestaurantFinder';
 
 const AddRestaurants = ({
   properties,
   handleNameProps,
   handleLocationProps,
   handlePriceRangeProps,
+  createNewRestaurant,
 }) => {
-  // console.log('object');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await RestaurantFinder.post('/', {
+        name: properties.name,
+        location: properties.location,
+        price_range: properties.priceRange,
+      });
+      console.log('moj response', response);
+      console.log('moj response', response.data.data.restaurant);
+      createNewRestaurant(response.data.data.restaurant);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className='mb-4'>
       <form>
@@ -50,7 +68,13 @@ const AddRestaurants = ({
               <option value='5'>$$$$$</option>
             </select>
           </div>
-          <button className='btn btn-primary'>Add</button>
+          <button
+            onClick={handleSubmit}
+            type='submit'
+            className='btn btn-primary'
+          >
+            Add
+          </button>
         </div>
       </form>
     </div>
@@ -58,7 +82,7 @@ const AddRestaurants = ({
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('mapStateToProps', state.restaurantReducer.properties);
+  // console.log('mapStateToProps', state.restaurantReducer.properties);
   return {
     properties: state.restaurantReducer.properties,
   };
@@ -69,6 +93,7 @@ const mapDispatchToProps = (dispatch) => {
     handleNameProps: bindActionCreators(handleNameProps, dispatch),
     handleLocationProps: bindActionCreators(handleLocationProps, dispatch),
     handlePriceRangeProps: bindActionCreators(handlePriceRangeProps, dispatch),
+    createNewRestaurant: bindActionCreators(createNewRestaurant, dispatch),
   };
 };
 

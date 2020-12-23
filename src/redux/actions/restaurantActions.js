@@ -1,4 +1,6 @@
 import {
+  CREATE_NEW_RESTAURANT,
+  DELETE_RESTAURANT,
   HANDLE_LOCATION_PROPS,
   HANDLE_NAME_PROPS,
   HANDLE_PRICE_RANGE_PROPS,
@@ -30,5 +32,21 @@ export const handlePriceRangeProps = (props) => {
   return {
     type: HANDLE_PRICE_RANGE_PROPS,
     payload: props,
+  };
+};
+
+export const createNewRestaurant = (restaurant) => {
+  console.log('restaurantAkcija', restaurant);
+  return {
+    type: CREATE_NEW_RESTAURANT,
+    payload: restaurant,
+  };
+};
+
+export const deleteRestaurant = (id) => {
+  console.log('id', id);
+  return {
+    type: DELETE_RESTAURANT,
+    payload: id,
   };
 };

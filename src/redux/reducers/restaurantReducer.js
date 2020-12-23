@@ -1,4 +1,6 @@
 import {
+  CREATE_NEW_RESTAURANT,
+  DELETE_RESTAURANT,
   HANDLE_LOCATION_PROPS,
   HANDLE_NAME_PROPS,
   HANDLE_PRICE_RANGE_PROPS,
@@ -17,11 +19,12 @@ const initialState = {
 const restaurantReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_RESTAURANTS:
-      // console.log('akcija', action.payload);
+      console.log('akcija', action.payload);
       return {
         ...state,
         restaurants: action.payload,
       };
+
     case HANDLE_NAME_PROPS:
       console.log(action.payload);
       return {
@@ -31,6 +34,7 @@ const restaurantReducer = (state = initialState, action) => {
           name: action.payload,
         },
       };
+
     case HANDLE_LOCATION_PROPS:
       return {
         ...state,
@@ -39,6 +43,7 @@ const restaurantReducer = (state = initialState, action) => {
           location: action.payload,
         },
       };
+
     case HANDLE_PRICE_RANGE_PROPS:
       return {
         ...state,
@@ -47,6 +52,23 @@ const restaurantReducer = (state = initialState, action) => {
           priceRange: action.payload,
         },
       };
+
+    case CREATE_NEW_RESTAURANT:
+      console.log('create', action.payload);
+      return {
+        ...state,
+        restaurants: [...state.restaurants, action.payload],
+      };
+
+    case DELETE_RESTAURANT:
+      console.log(action.payload);
+      return {
+        ...state,
+        restaurants: state.restaurants.filter(
+          (restaurant) => restaurant.id !== action.payload
+        ),
+      };
+
     default:
       return state;
   }
