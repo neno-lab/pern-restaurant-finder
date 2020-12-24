@@ -1,10 +1,15 @@
 import {
   CREATE_NEW_RESTAURANT,
   DELETE_RESTAURANT,
+  HANDLE_NAME_EDIT,
   HANDLE_LOCATION_PROPS,
   HANDLE_NAME_PROPS,
   HANDLE_PRICE_RANGE_PROPS,
   LOAD_RESTAURANTS,
+  HANDLE_LOCATION_EDIT,
+  HANDLE_PRICE_RANGE_EDIT,
+  EDIT_RESTAURANT,
+  UPDATE_RESTAURANT,
 } from './restaurantTypes';
 
 export const loadRestaurants = (restaurants) => {
@@ -48,5 +53,40 @@ export const deleteRestaurant = (id) => {
   return {
     type: DELETE_RESTAURANT,
     payload: id,
+  };
+};
+
+export const handleNameEdit = (props) => {
+  return {
+    type: HANDLE_NAME_EDIT,
+    payload: props,
+  };
+};
+
+export const handleLocationEdit = (props) => {
+  return {
+    type: HANDLE_LOCATION_EDIT,
+    payload: props,
+  };
+};
+
+export const handlePriceRangeEdit = (props) => {
+  return {
+    type: HANDLE_PRICE_RANGE_EDIT,
+    payload: props,
+  };
+};
+
+export const editRestaurant = (restaurant) => {
+  return {
+    type: EDIT_RESTAURANT,
+    payload: restaurant,
+  };
+};
+
+export const updateRestaurant = (restaurant) => {
+  return {
+    type: UPDATE_RESTAURANT,
+    payload: restaurant,
   };
 };

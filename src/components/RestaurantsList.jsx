@@ -6,12 +6,15 @@ import {
   deleteRestaurant,
   loadRestaurants,
 } from '../redux/actions/restaurantActions';
+import { useHistory } from 'react-router-dom';
 
 const RestaurantsList = ({
   restaurants,
   loadRestaurants,
   deleteRestaurant,
 }) => {
+  let history = useHistory();
+
   useEffect(() => {
     // pozovi funkciju gdje cemo pozivati naš api jer useEffect 'ne voli' da mu vracamo promise (a u našem slučaju response vraća promise)
     const fetchData = async () => {
@@ -37,6 +40,10 @@ const RestaurantsList = ({
     }
   };
 
+  const handleUpdate = (id) => {
+    history.push(`/restaurants/${id}/update`);
+  };
+
   return (
     <div className='list-group'>
       <table className='table table-hover table-dark'>
@@ -59,7 +66,12 @@ const RestaurantsList = ({
                 <td>{'$'.repeat(restaurant.price_range)}</td>
                 <td>reviews</td>
                 <td>
-                  <button className='btn btn-warning'>Update</button>
+                  <button
+                    onClick={() => handleUpdate(restaurant.id)}
+                    className='btn btn-warning'
+                  >
+                    Update
+                  </button>
                 </td>
                 <td>
                   <button
