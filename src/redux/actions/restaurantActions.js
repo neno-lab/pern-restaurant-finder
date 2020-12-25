@@ -10,6 +10,7 @@ import {
   HANDLE_PRICE_RANGE_EDIT,
   EDIT_RESTAURANT,
   UPDATE_RESTAURANT,
+  SELECT_RESTAURANT,
 } from './restaurantTypes';
 
 export const loadRestaurants = (restaurants) => {
@@ -87,6 +88,14 @@ export const editRestaurant = (restaurant) => {
 export const updateRestaurant = (restaurant) => {
   return {
     type: UPDATE_RESTAURANT,
+    payload: restaurant,
+  };
+};
+
+export const selectRestaurant = (restaurant) => {
+  console.log('moja akcija', restaurant);
+  return {
+    type: SELECT_RESTAURANT,
     payload: restaurant,
   };
 };

@@ -10,6 +10,7 @@ import {
   HANDLE_PRICE_RANGE_EDIT,
   EDIT_RESTAURANT,
   UPDATE_RESTAURANT,
+  SELECT_RESTAURANT,
 } from '../actions/restaurantTypes';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
     location: '',
     priceRange: 'Price Range',
   },
+  selectedRestaurant: '',
 };
 
 const restaurantReducer = (state = initialState, action) => {
@@ -131,6 +133,13 @@ const restaurantReducer = (state = initialState, action) => {
         restaurants: state.restaurants.map((restaurant) =>
           restaurant.id !== action.payload.id ? restaurant : action.payload
         ),
+      };
+
+    case SELECT_RESTAURANT:
+      console.log('reducer', action.payload);
+      return {
+        ...state,
+        selectedRestaurant: action.payload,
       };
 
     default:

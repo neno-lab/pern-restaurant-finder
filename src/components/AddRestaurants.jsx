@@ -24,8 +24,8 @@ const AddRestaurants = ({
         location: properties.location,
         price_range: properties.priceRange,
       });
-      console.log('moj response', response);
-      console.log('moj response', response.data.data.restaurant);
+      // console.log('moj response', response);
+      // console.log('moj response', response.data.data.restaurant);
       createNewRestaurant(response.data.data.restaurant);
     } catch (err) {
       console.error(err.message);
