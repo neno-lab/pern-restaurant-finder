@@ -11,6 +11,9 @@ import {
   EDIT_RESTAURANT,
   UPDATE_RESTAURANT,
   SELECT_RESTAURANT,
+  HANDLE_NAME_REVIEW,
+  HANDLE_REVIEW_TEXT_REVIEW,
+  HANDLE_RATING_REVIEW,
 } from './restaurantTypes';
 
 export const loadRestaurants = (restaurants) => {
@@ -97,5 +100,26 @@ export const selectRestaurant = (restaurant) => {
   return {
     type: SELECT_RESTAURANT,
     payload: restaurant,
+  };
+};
+
+export const handleNameReview = (props) => {
+  return {
+    type: HANDLE_NAME_REVIEW,
+    payload: props,
+  };
+};
+
+export const handleReviewTextReview = (props) => {
+  return {
+    type: HANDLE_REVIEW_TEXT_REVIEW,
+    payload: props,
+  };
+};
+
+export const handleRatingReview = (props) => {
+  return {
+    type: HANDLE_RATING_REVIEW,
+    payload: props,
   };
 };

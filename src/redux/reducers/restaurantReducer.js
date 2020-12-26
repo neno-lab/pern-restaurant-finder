@@ -11,6 +11,9 @@ import {
   EDIT_RESTAURANT,
   UPDATE_RESTAURANT,
   SELECT_RESTAURANT,
+  HANDLE_NAME_REVIEW,
+  HANDLE_REVIEW_TEXT_REVIEW,
+  HANDLE_RATING_REVIEW,
 } from '../actions/restaurantTypes';
 
 const initialState = {
@@ -21,6 +24,11 @@ const initialState = {
     priceRange: 'Price Range',
   },
   selectedRestaurant: '',
+  reviews: {
+    name: '',
+    reviewText: '',
+    rating: 'Rating',
+  },
 };
 
 const restaurantReducer = (state = initialState, action) => {
@@ -140,6 +148,36 @@ const restaurantReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedRestaurant: action.payload,
+      };
+
+    case HANDLE_NAME_REVIEW:
+      console.log('revju name', action.payload);
+      return {
+        ...state,
+        reviews: {
+          ...state.reviews,
+          name: action.payload,
+        },
+      };
+
+    case HANDLE_REVIEW_TEXT_REVIEW:
+      console.log('revju text', action.payload);
+      return {
+        ...state,
+        reviews: {
+          ...state.reviews,
+          reviewText: action.payload,
+        },
+      };
+
+    case HANDLE_RATING_REVIEW:
+      console.log('revju rating', action.payload);
+      return {
+        ...state,
+        reviews: {
+          ...state.reviews,
+          rating: action.payload,
+        },
       };
 
     default:

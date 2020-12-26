@@ -4,8 +4,8 @@ import RestaurantFinder from '../api/RestaurantFinder';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectRestaurant } from '../redux/actions/restaurantActions';
-import StarRating from '../components/StarRating';
 import Reviews from '../components/Reviews';
+import AddReview from '../components/AddReview';
 
 const RestaurantDetailPage = ({ selectedRestaurant, selectRestaurant }) => {
   const { id } = useParams();
@@ -14,8 +14,8 @@ const RestaurantDetailPage = ({ selectedRestaurant, selectRestaurant }) => {
     const fetchData = async () => {
       try {
         const response = await RestaurantFinder.get(`/${id}`);
-        console.log(response);
-        selectRestaurant(response.data.data.restaurant);
+        console.log('odiiii', response.data.data);
+        selectRestaurant(response.data.data);
       } catch (err) {
         console.error(err.message);
       }
@@ -27,9 +27,13 @@ const RestaurantDetailPage = ({ selectedRestaurant, selectRestaurant }) => {
     <div>
       {selectedRestaurant && (
         <>
+          <h1 className='text-center display-1'>
+            {selectedRestaurant.restaurant.name}
+          </h1>
           <div className='mt-3'>
-            <Reviews />
+            <Reviews reviews={selectedRestaurant.reviews} />
           </div>
+          <AddReview />
         </>
       )}
     </div>
