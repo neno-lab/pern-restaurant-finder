@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
+import RestaurantFinder from '../api/RestaurantFinder';
 import {
   handleNameReview,
   handleRatingReview,
@@ -13,6 +15,27 @@ const AddReview = ({
   handleReviewTextReview,
   handleRatingReview,
 }) => {
+  const { id } = useParams();
+  const location = useLocation();
+  const history = useHistory();
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await RestaurantFinder.post(`${id}/addReview`, {
+        name: reviews.name,
+        review: reviews.reviewText,
+        rating: reviews.rating,
+      });
+      console.log(response);
+      // ovo je hack!!!
+      history.push('/');
+      history.push(location.pathname);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className='mb-2'>
       <form>
@@ -54,7 +77,13 @@ const AddReview = ({
             className='form-control'
           ></textarea>
         </div>
-        <button className='btn btn-primary'>Submit</button>
+        <button
+          type='submit'
+          onClick={handleSubmitReview}
+          className='btn btn-primary'
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
