@@ -22,7 +22,7 @@ This CRUD application is based on Yelp website. You can create restaurant with n
 #### Installation
 
 ```
-  npm install
+    npm install
 ```
 
 #### Run the server
