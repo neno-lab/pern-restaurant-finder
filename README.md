@@ -1,4 +1,4 @@
-# Restaurant Finder App
+# Restaurant Finder App (using PERN)
 
 ---
 
